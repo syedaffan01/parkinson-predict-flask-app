@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parkinson's Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            max-width: 700px;
+            margin: auto;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0 16px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Parkinson's Disease Prediction</h2>
+    <form action="/predict" method="post">
+        <!-- Input fields for all 22 features -->
+        {% for feature in [
+            'MDVP:Fo(Hz)', 'MDVP:Fhi(Hz)', 'MDVP:Flo(Hz)',
+            'MDVP:Jitter(%)', 'MDVP:Jitter(Abs)', 'MDVP:RAP',
+            'MDVP:PPQ', 'Jitter:DDP', 'MDVP:Shimmer',
+            'MDVP:Shimmer(dB)', 'Shimmer:APQ3', 'Shimmer:APQ5',
+            'MDVP:APQ', 'Shimmer:DDA', 'NHR', 'HNR', 'RPDE',
+            'DFA', 'spread1', 'spread2', 'D2', 'PPE'
+        ] %}
+            <label>{{ feature }}</label>
+            <input type="text" name="{{ feature }}" required>
+        {% endfor %}
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+</body>
+</html>
